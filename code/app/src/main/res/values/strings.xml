@@ -2,5 +2,8 @@
     <string name="app_name">Labo 3</string>
     <string name="Barcode">Barcode</string>
     <string name="NFC">NFC</string>
+    <string name="Scan_Me">Scan me</string>
     <string name="welcome">Welcome to this awesome third Lab of SYM</string>
+    <string name="welcome_Barcode">Welcome to this awesome barcode scanner Activity</string>
+    <string name="received_barcode">Received number : </string>
 </resources>
