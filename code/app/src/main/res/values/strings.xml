@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Labo 3</string>
+    <string name="Bluetooth">Bluetooth</string>
+    <string name="NFC">NFC</string>
+    <string name="welcome">Welcome to this awesome third Lab of SYM</string>
+</resources>
