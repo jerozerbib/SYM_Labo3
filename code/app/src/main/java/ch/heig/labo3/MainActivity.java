@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
         });
 
-        bluetooth = findViewById(R.id.bluetooth);
+        bluetooth = findViewById(R.id.barcode);
         bluetooth.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, BluetoothActivity.class);
+            Intent intent = new Intent(MainActivity.this, BarCodeActivity.class);
             startActivityForResult(intent, 1);
         });
 
