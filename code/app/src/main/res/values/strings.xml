@@ -3,4 +3,7 @@
     <string name="Bluetooth">Bluetooth</string>
     <string name="NFC">NFC</string>
     <string name="welcome">Welcome to this awesome third Lab of SYM</string>
+    <string name="connect">CONNECT</string>
+    <string name="password">Password :</string>
+    <string name="username">Username :</string>
 </resources>
