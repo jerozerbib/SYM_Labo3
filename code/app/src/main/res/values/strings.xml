@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Labo 3</string>
-    <string name="Bluetooth">Bluetooth</string>
+    <string name="Barcode">Barcode</string>
     <string name="NFC">NFC</string>
+    <string name="Scan_Me">Scan me</string>
     <string name="welcome">Welcome to this awesome third Lab of SYM</string>
+    <string name="welcome_Barcode">Welcome to this awesome barcode scanner Activity</string>
+    <string name="received_barcode">Received number : </string>
     <string name="connect">CONNECT</string>
     <string name="password">Password :</string>
     <string name="username">Username :</string>
+>>>>>>> ee9c1631fa1d9c98510f6a1c1cc401d36a221ef0
 </resources>
