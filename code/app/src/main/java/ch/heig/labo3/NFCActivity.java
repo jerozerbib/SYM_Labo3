@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -16,6 +17,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
@@ -28,16 +30,18 @@ public class NFCActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private NfcAdapter mNfcAdapter;
+    private TextView flag;
 
-    private final int MAX_TIME = 45000;
+    private final int MAX_TIME = 10000;
     private boolean nfcStatus = false;
-    private String result;
+    private String nfcResult;
 
 
     public static final String TAG = "NfcDemo";
     public static final String MIME_TEXT_PLAIN = "text/plain";
-    private final String USERNAME = "lionel";
-    private final String PASSWORD = "burgbacher";
+    private final String USERNAME = "lio";
+    private final String PASSWORD = "lio";
+    private final String NFC_SECRET = "test";
 
 
     @Override
@@ -45,6 +49,7 @@ public class NFCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
+        flag = findViewById(R.id.nfc_status);
         connec = findViewById(R.id.nfc_button);
         username = findViewById(R.id.username_nfc);
         password = findViewById(R.id.password_nfc);
@@ -54,14 +59,12 @@ public class NFCActivity extends AppCompatActivity {
             String usernameS = username.getText().toString();
             String passwordS = password.getText().toString();
 
-            /*
             if(!nfcStatus){
                 Toast.makeText(this, "There is no NFC.", Toast.LENGTH_LONG).show();
                 return;
             }
-             */
 
-            if(!login(usernameS, passwordS)){
+            if(!login(usernameS, passwordS, nfcResult)){
                 Toast.makeText(this, "Wrong password or username.", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -77,7 +80,6 @@ public class NFCActivity extends AppCompatActivity {
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
             finish();
             return;
-
         }
 
         if (!mNfcAdapter.isEnabled()) {
@@ -230,14 +232,17 @@ public class NFCActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
                 nfcStatus = true;
+                nfcResult = result;
+                flag.setText("NFC is up!");
+                flag.setTextColor(Color.GREEN);
                 startTimer();
             }
         }
     }
 
-    private boolean login(String username, String password){
+    private boolean login(String username, String password, String result){
 
-        return USERNAME.equals(username) && PASSWORD.equals(password);
+        return USERNAME.equals(username) && PASSWORD.equals(password) && NFC_SECRET.equals(result);
     }
 
     private void startTimer(){
@@ -245,6 +250,9 @@ public class NFCActivity extends AppCompatActivity {
             public void onTick(long millisUntilDone){}
             public void onFinish() {
                 nfcStatus = false;
+                nfcResult = "";
+                flag.setText("NFC is Down!");
+                flag.setTextColor(Color.RED);
             }
         }.start();
     }

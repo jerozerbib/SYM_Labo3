@@ -29,7 +29,6 @@ public class NFCSecondActivity extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter;
 
-    private boolean nfcStatus = false;
     public static final String TAG = "NfcDemo";
     public static final String MIME_TEXT_PLAIN = "text/plain";
 
@@ -78,10 +77,6 @@ public class NFCSecondActivity extends AppCompatActivity {
             }
         });
 
-        if(currentTime == -1){
-            Toast.makeText(this, "There is no more permission.", Toast.LENGTH_LONG).show();
-        }
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null) {
@@ -104,7 +99,7 @@ public class NFCSecondActivity extends AppCompatActivity {
     //src : https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
     private void display(String message){
         AlertDialog alertDialog = new AlertDialog.Builder(NFCSecondActivity.this).create();
-        alertDialog.setTitle("Alert");
+        alertDialog.setTitle("NFC");
         alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 (dialog, which) -> dialog.dismiss());
@@ -119,8 +114,8 @@ public class NFCSecondActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        stopForegroundDispatch();
         super.onPause();
+        stopForegroundDispatch();
     }
 
     @Override
@@ -139,10 +134,12 @@ public class NFCSecondActivity extends AppCompatActivity {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
                 new NFCSecondActivity.NdefReaderTask().execute(tag);
 
-            } else {
+            }
+            else {
                 Log.d(TAG, "Wrong mime type: " + type);
             }
-        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+        }
+        else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
 
             // In case we would still use the Tech Discovered Intent
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -251,7 +248,6 @@ public class NFCSecondActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                nfcStatus = true;
                 currentTime = MAX_TIME;
                 startTimer();
             }
@@ -261,7 +257,6 @@ public class NFCSecondActivity extends AppCompatActivity {
     private void startTimer(){
         CountDownTimer counter = new CountDownTimer(MAX_TIME, 1000){
             public void onTick(long millisUntilDone){
-
                 currentTime = millisUntilDone;
             }
             public void onFinish() {
