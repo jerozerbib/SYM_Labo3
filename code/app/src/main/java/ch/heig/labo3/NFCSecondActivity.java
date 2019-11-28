@@ -1,11 +1,11 @@
 package ch.heig.labo3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -13,85 +13,82 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.Arrays;
 
-public class NFCActivity extends AppCompatActivity {
+public class NFCSecondActivity extends AppCompatActivity {
 
+    private Button maxSecurity;
+    private Button mediumSecurity;
+    private Button minSecurity;
 
-    private Button connec;
-    private EditText username;
-    private EditText password;
     private NfcAdapter mNfcAdapter;
-    private TextView flagNfc;
-
-    private final int MAX_TIME = 10;
-    private long now;
-    private String nfcResult;
-
 
     public static final String TAG = "NfcDemo";
     public static final String MIME_TEXT_PLAIN = "text/plain";
-    private final String USERNAME = "lio";
-    private final String PASSWORD = "lio";
-    private final String NFC_SECRET = "test";
+    public static final String PERMISSION_OK = "You have Permission.";
+    public static final String PERMISSION_NOT_OK = "You don't have permission.";
 
+
+    private final int MAX_LEVEL = 10;
+    private final int MEDIUM_LEVEL = 20;
+    private final int MIN_LEVEL = 30;
+    private long now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfc);
+        setContentView(R.layout.activity_nfcsecond);
 
-        flagNfc = findViewById(R.id.nfc_status);
-        connec = findViewById(R.id.nfc_button);
-        username = findViewById(R.id.username_nfc);
-        password = findViewById(R.id.password_nfc);
+        maxSecurity = findViewById(R.id.nfc_button_sec_1);
+        mediumSecurity = findViewById(R.id.nfc_button_sec_2);
+        minSecurity = findViewById(R.id.nfc_button_sec_3);
 
         now = Instant.now().getEpochSecond();
 
-        connec.setOnClickListener(v -> {
-
-            String usernameS = username.getText().toString();
-            String passwordS = password.getText().toString();
-
-            if(Instant.now().getEpochSecond() - now > MAX_TIME){
-                Toast.makeText(this, "There is no NFC.", Toast.LENGTH_LONG).show();
-                return;
+        maxSecurity.setOnClickListener(v -> {
+            if(Instant.now().getEpochSecond() - now < MAX_LEVEL){
+                display(PERMISSION_OK);
             }
-
-            if(!login(usernameS, passwordS, nfcResult)){
-                Toast.makeText(this, "Wrong password, username or wrong NFC secret.", Toast.LENGTH_LONG).show();
-                return;
+            else{
+                display(PERMISSION_NOT_OK);
             }
+        });
 
-            Intent intent = new Intent(NFCActivity.this, NFCSecondActivity.class);
-            startActivity(intent);
+        mediumSecurity.setOnClickListener(v ->{
+            if(Instant.now().getEpochSecond() - now <  MEDIUM_LEVEL){
+                display(PERMISSION_OK);
+            }
+            else{
+                display(PERMISSION_NOT_OK);
+            }
+        });
+
+        minSecurity.setOnClickListener(v -> {
+            if(Instant.now().getEpochSecond() - now <  MIN_LEVEL){
+                display(PERMISSION_OK);
+            }
+            else{
+                display(PERMISSION_NOT_OK);
+            }
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, "NFC is not enable.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
         handleIntent(getIntent());
+    }
+
+    //src : https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
+    private void display(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(NFCSecondActivity.this).create();
+        alertDialog.setTitle("NFC");
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.show();
     }
 
     @Override
@@ -102,8 +99,8 @@ public class NFCActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        stopForegroundDispatch();
         super.onPause();
+        stopForegroundDispatch();
     }
 
     @Override
@@ -120,12 +117,14 @@ public class NFCActivity extends AppCompatActivity {
             if (MIME_TEXT_PLAIN.equals(type)) {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                new NdefReaderTask().execute(tag);
+                new NFCSecondActivity.NdefReaderTask().execute(tag);
 
-            } else {
+            }
+            else {
                 Log.d(TAG, "Wrong mime type: " + type);
             }
-        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+        }
+        else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
 
             // In case we would still use the Tech Discovered Intent
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -134,7 +133,7 @@ public class NFCActivity extends AppCompatActivity {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    new NdefReaderTask().execute(tag);
+                    new NFCSecondActivity.NdefReaderTask().execute(tag);
                     break;
                 }
             }
@@ -235,27 +234,7 @@ public class NFCActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
                 now = Instant.now().getEpochSecond();
-                nfcResult = result;
-                flagNfc.setText("NFC is up!");
-                flagNfc.setTextColor(Color.GREEN);
-                startTimer();
             }
         }
-    }
-
-    private boolean login(String username, String password, String result){
-
-        return USERNAME.equals(username) && PASSWORD.equals(password) && NFC_SECRET.equals(result);
-    }
-
-    private void startTimer(){
-        CountDownTimer counter = new CountDownTimer(10000, 1000){
-            public void onTick(long millisUntilDone){}
-            public void onFinish() {
-                nfcResult = "";
-                flagNfc.setText("NFC is Down!");
-                flagNfc.setTextColor(Color.RED);
-            }
-        }.start();
     }
 }
