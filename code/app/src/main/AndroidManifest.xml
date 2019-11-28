@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.heig.labo3">
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
@@ -13,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NFCActivity"></activity>
+        <activity android:name=".NFCSecondActivity"></activity>
+        <activity android:name=".NFCActivity" />
+        <activity android:name=".BluetoothActivity" />
         <activity android:name=".BarCodeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

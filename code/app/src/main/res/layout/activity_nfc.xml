@@ -34,13 +34,25 @@
         android:layout_marginBottom="10dp"
         android:inputType="textPassword" />
 
+
+    <TextView
+        android:id="@+id/nfc_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#FF0000"
+        android:textAlignment="center"
+        android:text="NFC is not up."
+        android:layout_marginTop="50dp" />
+
     <Button
         android:id="@+id/nfc_button"
         android:layout_width="200dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:text="@string/connect" />
+
 
 </LinearLayout>
