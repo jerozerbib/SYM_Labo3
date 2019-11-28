@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nfc = findViewById(R.id.nfc);
+        nfc = findViewById(R.id.scan_me_button);
         nfc.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NFCActivity.class);
             startActivityForResult(intent, 1);

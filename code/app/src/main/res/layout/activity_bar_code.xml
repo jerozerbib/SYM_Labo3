@@ -23,7 +23,7 @@
         android:hint="@string/Scan_Me" />
 
     <TextView
-        android:id="@+id/response"
+        android:id="@+id/barcode_response"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/received_barcode" />
