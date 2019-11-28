@@ -15,7 +15,7 @@
         android:text="@string/welcome_Barcode" />
 
     <Button
-        android:id="@+id/nfc"
+        android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
