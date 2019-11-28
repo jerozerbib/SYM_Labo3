@@ -13,12 +13,11 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
 import java.util.Arrays;
 
 public class NFCSecondActivity extends AppCompatActivity {
@@ -31,68 +30,54 @@ public class NFCSecondActivity extends AppCompatActivity {
 
     public static final String TAG = "NfcDemo";
     public static final String MIME_TEXT_PLAIN = "text/plain";
+    public static final String PERMISSION_OK = "You have Permission.";
+    public static final String PERMISSION_NOT_OK = "You don't have permission.";
 
 
-    private  long currentTime = 0;
-    private final int MAX_TIME = 45000;
-    private final int MAX_LEVEL = 30000;
-    private final int MEDIUM_LEVEL = 15000;
-    private final int MIN_LEVEL = 0;
+    private final int MAX_LEVEL = 10;
+    private final int MEDIUM_LEVEL = 20;
+    private final int MIN_LEVEL = 30;
+    private long now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcsecond);
 
-        currentTime = MAX_TIME;
         maxSecurity = findViewById(R.id.nfc_button_sec_1);
         mediumSecurity = findViewById(R.id.nfc_button_sec_2);
         minSecurity = findViewById(R.id.nfc_button_sec_3);
-        startTimer();
+
+        now = Instant.now().getEpochSecond();
 
         maxSecurity.setOnClickListener(v -> {
-            if( currentTime > MAX_LEVEL){
-                display("You have Permission.");
+            if(Instant.now().getEpochSecond() - now < MAX_LEVEL){
+                display(PERMISSION_OK);
             }
             else{
-                display("You don't have permissions");
+                display(PERMISSION_NOT_OK);
             }
         });
 
         mediumSecurity.setOnClickListener(v ->{
-            if( currentTime > MEDIUM_LEVEL){
-                display("You have Permission.");
+            if(Instant.now().getEpochSecond() - now <  MEDIUM_LEVEL){
+                display(PERMISSION_OK);
             }
             else{
-                display("You don't have permissions");
+                display(PERMISSION_NOT_OK);
             }
         });
 
         minSecurity.setOnClickListener(v -> {
-            if( currentTime > MIN_LEVEL){
-                display("You have Permission.");
+            if(Instant.now().getEpochSecond() - now <  MIN_LEVEL){
+                display(PERMISSION_OK);
             }
             else{
-                display("You don't have permissions");
+                display(PERMISSION_NOT_OK);
             }
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-
-        }
-
-        if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, "NFC is not enable.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
         handleIntent(getIntent());
     }
 
@@ -248,21 +233,8 @@ public class NFCSecondActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                currentTime = MAX_TIME;
-                startTimer();
+                now = Instant.now().getEpochSecond();
             }
         }
-    }
-
-    private void startTimer(){
-        CountDownTimer counter = new CountDownTimer(MAX_TIME, 1000){
-            public void onTick(long millisUntilDone){
-                currentTime = millisUntilDone;
-            }
-            public void onFinish() {
-                currentTime = 0;
-            }
-
-        }.start();
     }
 }

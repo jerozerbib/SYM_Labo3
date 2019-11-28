@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
 import java.util.Arrays;
 
 public class NFCActivity extends AppCompatActivity {
@@ -30,10 +31,10 @@ public class NFCActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private NfcAdapter mNfcAdapter;
-    private TextView flag;
+    private TextView flagNfc;
 
-    private final int MAX_TIME = 10000;
-    private boolean nfcStatus = false;
+    private final int MAX_TIME = 10;
+    private long now;
     private String nfcResult;
 
 
@@ -49,23 +50,25 @@ public class NFCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        flag = findViewById(R.id.nfc_status);
+        flagNfc = findViewById(R.id.nfc_status);
         connec = findViewById(R.id.nfc_button);
         username = findViewById(R.id.username_nfc);
         password = findViewById(R.id.password_nfc);
+
+        now = Instant.now().getEpochSecond();
 
         connec.setOnClickListener(v -> {
 
             String usernameS = username.getText().toString();
             String passwordS = password.getText().toString();
 
-            if(!nfcStatus){
+            if(Instant.now().getEpochSecond() - now > MAX_TIME){
                 Toast.makeText(this, "There is no NFC.", Toast.LENGTH_LONG).show();
                 return;
             }
 
             if(!login(usernameS, passwordS, nfcResult)){
-                Toast.makeText(this, "Wrong password or username.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Wrong password, username or wrong NFC secret.", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -231,10 +234,10 @@ public class NFCActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                nfcStatus = true;
+                now = Instant.now().getEpochSecond();
                 nfcResult = result;
-                flag.setText("NFC is up!");
-                flag.setTextColor(Color.GREEN);
+                flagNfc.setText("NFC is up!");
+                flagNfc.setTextColor(Color.GREEN);
                 startTimer();
             }
         }
@@ -246,13 +249,12 @@ public class NFCActivity extends AppCompatActivity {
     }
 
     private void startTimer(){
-        CountDownTimer counter = new CountDownTimer(MAX_TIME, 1000){
+        CountDownTimer counter = new CountDownTimer(10000, 1000){
             public void onTick(long millisUntilDone){}
             public void onFinish() {
-                nfcStatus = false;
                 nfcResult = "";
-                flag.setText("NFC is Down!");
-                flag.setTextColor(Color.RED);
+                flagNfc.setText("NFC is Down!");
+                flagNfc.setTextColor(Color.RED);
             }
         }.start();
     }
