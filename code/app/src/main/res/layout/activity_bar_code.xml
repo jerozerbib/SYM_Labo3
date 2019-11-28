@@ -12,21 +12,20 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="50dp"
         android:textAlignment="center"
-        android:text="@string/welcome" />
+        android:text="@string/welcome_Barcode" />
 
     <Button
-        android:id="@+id/scan_me_button"
+        android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="@string/NFC" />
+        android:hint="@string/Scan_Me" />
 
-    <Button
-        android:id="@+id/barcode"
+    <TextView
+        android:id="@+id/barcode_response"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:hint="@string/Barcode" />
+        android:text="@string/received_barcode" />
+
 </LinearLayout>
