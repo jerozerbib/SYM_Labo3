@@ -12,6 +12,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,9 @@ public class NFCActivity extends AppCompatActivity {
     private EditText password;
     private NfcAdapter mNfcAdapter;
 
+    private final int MAX_TIME = 45000;
     private boolean nfcStatus = false;
+    private String result;
 
 
     public static final String TAG = "NfcDemo";
@@ -51,10 +54,12 @@ public class NFCActivity extends AppCompatActivity {
             String usernameS = username.getText().toString();
             String passwordS = password.getText().toString();
 
+            /*
             if(!nfcStatus){
                 Toast.makeText(this, "There is no NFC.", Toast.LENGTH_LONG).show();
                 return;
             }
+             */
 
             if(!login(usernameS, passwordS)){
                 Toast.makeText(this, "Wrong password or username.", Toast.LENGTH_LONG).show();
@@ -64,7 +69,6 @@ public class NFCActivity extends AppCompatActivity {
             Intent intent = new Intent(NFCActivity.this, NFCSecondActivity.class);
             startActivity(intent);
         });
-
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -88,32 +92,17 @@ public class NFCActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        /**
-         * It's important, that the activity is in the foreground (resumed). Otherwise
-         * an IllegalStateException is thrown.
-         */
         setupForegroundDispatch();
     }
 
     @Override
     protected void onPause() {
-        /**
-         * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
-         */
         stopForegroundDispatch();
         super.onPause();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        /**
-         * This method gets called, when a new Intent gets associated with the current activity instance.
-         * Instead of creating a new activity, onNewIntent will be called. For more information have a look
-         * at the documentation.
-         *
-         * In our case this method gets called, when the user attaches a Tag to the device.
-         */
         super.onNewIntent(intent);
         handleIntent(intent);
     }
@@ -152,12 +141,9 @@ public class NFCActivity extends AppCompatActivity {
 
         if(mNfcAdapter == null)
             return;
-
         final Intent intent = new Intent(this.getApplicationContext(), this.getClass());
-
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent, 0);
-
         IntentFilter[] filters = new IntentFilter[1];
         String[][] techList = new String[][]{};
 
@@ -178,7 +164,6 @@ public class NFCActivity extends AppCompatActivity {
     private void stopForegroundDispatch() {
         if (mNfcAdapter != null)
             mNfcAdapter.disableForegroundDispatch(this);
-
     }
 
     /**
@@ -245,7 +230,7 @@ public class NFCActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
                 nfcStatus = true;
-                // mTextView.setText("Read content: " + result);
+                startTimer();
             }
         }
     }
@@ -253,5 +238,14 @@ public class NFCActivity extends AppCompatActivity {
     private boolean login(String username, String password){
 
         return USERNAME.equals(username) && PASSWORD.equals(password);
+    }
+
+    private void startTimer(){
+        CountDownTimer counter = new CountDownTimer(MAX_TIME, 1000){
+            public void onTick(long millisUntilDone){}
+            public void onFinish() {
+                nfcStatus = false;
+            }
+        }.start();
     }
 }
