@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -78,6 +79,20 @@ public class NFCSecondActivity extends AppCompatActivity {
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        if (mNfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        if (!mNfcAdapter.isEnabled()) {
+            Toast.makeText(this, "NFC is not enable.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         handleIntent(getIntent());
     }
 
