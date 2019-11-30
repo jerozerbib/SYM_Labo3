@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 public abstract class NFC extends AppCompatActivity {
 
+    //timestamp is used to know how much time you still have with a certain lvl of permission
     protected long timestamp;
     protected NfcAdapter mNfcAdapter;
 

@@ -16,4 +16,7 @@
     <string name="nfc_not_enable">NFC is not enable.</string>
     <string name="wrong_creds">Wrong password, username or wrong NFC secret.</string>
     <string name="full_perm">You have full permission again!</string>
+    <string name="max_security">MAX SECURITY</string>
+    <string name="medium_security">MEDIUM SECURITY</string>
+    <string name="min_security">MIN SECURITY</string>
 </resources>

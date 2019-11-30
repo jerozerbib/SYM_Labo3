@@ -21,6 +21,7 @@ public class NFCSecurityActivity extends NFC {
     public static final String PERMISSION_MIN_OK = "You still have minimum permission for ";
     public static final String PERMISSION_NOT_OK = "You don't have permission. If you want permission again, use the nfc.";
 
+    //seconds
     private final int MAX_LEVEL = 10;
     private final int MEDIUM_LEVEL = 20;
     private final int MIN_LEVEL = 30;
@@ -28,7 +29,7 @@ public class NFCSecurityActivity extends NFC {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfcsecond);
+        setContentView(R.layout.activity_nfcsecurity);
 
         maxSecurity = findViewById(R.id.nfc_button_sec_1);
         mediumSecurity = findViewById(R.id.nfc_button_sec_2);

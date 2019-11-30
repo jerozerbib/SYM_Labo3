@@ -19,6 +19,7 @@ public class NFCActivity extends NFC {
     private EditText password;
     private TextView flagNfc;
 
+    //seconds
     private final int MAX_TIME = 10;
     private String nfcResult;
 
@@ -26,7 +27,6 @@ public class NFCActivity extends NFC {
     private static final String USERNAME = "lio";
     private static final String PASSWORD = "lio";
     private static final String NFC_SECRET = "test";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
