@@ -11,10 +11,6 @@ import java.time.Instant;
 
 public class NFCSecurityActivity extends NFC {
 
-    private Button maxSecurity;
-    private Button mediumSecurity;
-    private Button minSecurity;
-
     public static final String PERMISSION_MAX_OK = "You still have max permission for ";
     public static final String PERMISSION_MEDIUM_OK = "You still have medium permission for ";
     public static final String PERMISSION_MIN_OK = "You still have minimum permission for ";
@@ -30,35 +26,29 @@ public class NFCSecurityActivity extends NFC {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcsecurity);
 
-        maxSecurity = findViewById(R.id.nfc_button_sec_1);
-        mediumSecurity = findViewById(R.id.nfc_button_sec_2);
-        minSecurity = findViewById(R.id.nfc_button_sec_3);
+        Button maxSecurity = findViewById(R.id.nfc_button_sec_1);
+        Button mediumSecurity = findViewById(R.id.nfc_button_sec_2);
+        Button minSecurity = findViewById(R.id.nfc_button_sec_3);
 
         timestamp = Instant.now().getEpochSecond();
 
-        maxSecurity.setOnClickListener(v -> {
-            message(PERMISSION_MAX_OK, MAX_LEVEL);
-        });
+        maxSecurity.setOnClickListener(v -> message(PERMISSION_MAX_OK, MAX_LEVEL));
 
-        mediumSecurity.setOnClickListener(v ->{
-            message(PERMISSION_MEDIUM_OK, MEDIUM_LEVEL);
-        });
+        mediumSecurity.setOnClickListener(v -> message(PERMISSION_MEDIUM_OK, MEDIUM_LEVEL));
 
-        minSecurity.setOnClickListener(v -> {
-            message(PERMISSION_MIN_OK, MIN_LEVEL);
-        });
+        minSecurity.setOnClickListener(v -> message(PERMISSION_MIN_OK, MIN_LEVEL));
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
-            Toast.makeText(this, R.string.nfc_doesnt_exist, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.nfcDoesntExist, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, R.string.nfc_not_enable, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.nfcNotEnable, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -98,7 +88,7 @@ public class NFCSecurityActivity extends NFC {
     protected void onPostExecuteOverride(String result){
         if(result != null) {
             timestamp = Instant.now().getEpochSecond();
-            Toast.makeText(this, R.string.full_perm, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fullPerm, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -42,7 +42,7 @@
         android:layout_gravity="center"
         android:textColor="#FF0000"
         android:textAlignment="center"
-        android:text="@string/nfc_is_down"
+        android:text="@string/nfcIsDown"
         android:layout_marginTop="50dp" />
 
     <Button
