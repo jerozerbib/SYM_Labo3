@@ -2,7 +2,6 @@ package ch.heig.labo3;
 
 import androidx.appcompat.app.AlertDialog;
 
-import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.widget.Button;
@@ -93,24 +92,6 @@ public class NFCSecurityActivity extends NFC {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 (dialog, which) -> dialog.dismiss());
         alertDialog.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setupForegroundDispatch();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopForegroundDispatch();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
     }
 
     @Override

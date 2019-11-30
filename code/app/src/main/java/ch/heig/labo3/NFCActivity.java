@@ -78,24 +78,6 @@ public class NFCActivity extends NFC {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        setupForegroundDispatch();
-    }
-
-    @Override
-    protected void onPause() {
-        stopForegroundDispatch();
-        super.onPause();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
-
-    @Override
     void onPostExecuteOverride(String result){
         timestamp = Instant.now().getEpochSecond();
         nfcResult = result;

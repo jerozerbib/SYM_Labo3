@@ -25,6 +25,24 @@ public abstract class NFC extends AppCompatActivity {
     public static final String TAG = "NfcDemo";
     public static final String MIME_TEXT_PLAIN = "text/plain";
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupForegroundDispatch();
+    }
+
+    @Override
+    protected void onPause() {
+        stopForegroundDispatch();
+        super.onPause();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
     protected void setupForegroundDispatch() {
 
         if(mNfcAdapter == null)
