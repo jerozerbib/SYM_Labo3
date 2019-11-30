@@ -1,30 +1,30 @@
-# SYM Labo 3
+# SYM - Laboratoire 03
 
-# Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
+Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
 
-## 2.4 Questions 
+## Introduction
 
-### 2.4.1
+ Ce travail est constitué de manipulations qui vont nous permettre de nous familiariser avec l’utilisation de données environnementales. Celui-ci est divisé en deux laboratoires : dans cette première partie nous nous intéresserons aux *codes-barres* et aux balises *NFC*, la seconde sera consacrée aux capteurs et à la communication *Bluetooth Low Energy*. 
 
-### Dans la manipulation ci-dessus, les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8 dans un format de message NDEF. Une personne malveillante ayant accès au porte-clés peut aisément copier les valeurs stockées dans celui-ci et les répliquer sur une autre puce NFC.
+## Questions
 
-### A partir de l’API Android concernant les tags NFC 4 , pouvez-vous imaginer une autre approche pour rendre plus compliqué le clonage des tags NFC ? Existe-il des limitations ? Voyez-vous d’autres possibilités ?
+### NFC
+
+#### Dans la manipulation ci-dessus, les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8 dans un format de message NDEF. Une personne malveillante ayant accès au porte-clés peut aisément copier les valeurs stockées dans celui-ci et les répliquer sur une autre puce NFC.
+
+#### A partir de l’API Android concernant les tags NFC 4 , pouvez-vous imaginer une autre approche pour rendre plus compliqué le clonage des tags NFC ? Existe-il des limitations ? Voyez-vous d’autres possibilités ?
 
 
 
-### 2.4.2 : Est-ce qu’une solution basée sur la vérification de la présence d’un iBeacon sur l’utilisateur, par exemple sous la forme d’un porte-clés serait préférable ? Veuillez en discuter.**
+### Code-barre/QR-Code
 
-
-
-## 3.2 Questions
-
-### 3.2.1 : Quelle est la quantité maximale de données pouvant être stockée sur un QR-code ? Veuillez expérimenter, avec le générateur conseillé de codes-barres (QR), de générer différentes tailles de QR-codes. Pensez-vous qu’il est envisageable d’utiliser confortablement des QR-codes complexes (par exemple du contenant >500 caractères de texte ou une vCard très complète) ?
+### Quelle est la quantité maximale de données pouvant être stockée sur un QR-code ? Veuillez expérimenter, avec le générateur conseillé de codes-barres (QR), de générer différentes tailles de QR-codes. Pensez-vous qu’il est envisageable d’utiliser confortablement des QR-codes complexes (par exemple du contenant >500 caractères de texte ou une vCard très complète) ?
 
 Il existe plusieurs versions de QR-Codes. A priori, selon le site [qrcode.com](https://www.qrcode.com/en/about/version.html), il y aurait 40 versions de QR-Codes différentes allant d'une taille de *21x21* à *177x177* modules. Un module est un carré blanc ou noir, tous de la même taille, ce qui engendre des tailles assez grandes dans le dernier cas. De ce fait, pour la plus grosse version, la taille maximale d'un QR-Code est de 23,648 bits, soit 7,089 caractères numériques, 4'296 caractères alphanumériques,  2'953 caractères binaires ou 1'817 kanji. Selon le site de générateurs de QR, il serait possible d'avoir une taille plus grande, *300x300*, mais nous n'avons pas trouvé d'informations à ce sujet sur d'autres sources d'informations. 
 
 Depuis le générateur, il a été aisé de créer des QR de grandes tailles. Un texte de plus de 500 caractères n'a pas posé de problème. En revanche, pour une vCard très complète, nous pourrions rencontrer certains problèmes si l'utilisateur renseigne le champ `Notes` de manière trop détaillée. Cela pourrait poser des problèmes s'il dépasse le nombre de caractères maximum du QR.  L'analyse des champs de la vCard doit être faite du côté applicatif pour pouvoir lire les champs du QR.
 
-### 3.2.2 : Il existe de très nombreux services sur Internet permettant de générer des QR-codes dynamiques. Veuillez expliquer ce que sont les QR-codes dynamiques. Quels sont les avantages et respectivement les inconvénients à utiliser ceux-ci en comparaison avec des QR-codes statiques. Vous adapterez votre réponse à une utilisation depuis une plateforme mobile.
+### Il existe de très nombreux services sur Internet permettant de générer des QR-codes dynamiques. Veuillez expliquer ce que sont les QR-codes dynamiques. Quels sont les avantages et respectivement les inconvénients à utiliser ceux-ci en comparaison avec des QR-codes statiques. Vous adapterez votre réponse à une utilisation depuis une plateforme mobile.
 
 Les QR-codes dynamiques sont  définis par le fait que nous pouvons modifier le contenu du QR-code à la volée. Le principe de base du QR-Code dynamique est que les données ne sont jamais stockées directement. Le mécanisme veut qu'une URL raccourcie  est passée dans les données du QR et cette dernière redirige vers ce que nous voulions lui passer. L'avantage de ce mécanisme est que nous n'avons pas besoin de créer un nouveau QR si l'on veut modifier les données à envoyer. 
 
