@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 public abstract class NFC extends AppCompatActivity {
 
-    //timestamp is used to know how much time you still have with a certain lvl of permission
+    // Timestamp is used to know how much time you still have with a certain lvl of permission
     protected long timestamp;
     protected NfcAdapter mNfcAdapter;
 
@@ -55,11 +55,12 @@ public abstract class NFC extends AppCompatActivity {
     }
 
     protected void setupForegroundDispatch() {
-
         if(mNfcAdapter == null)
             return;
+
         final Intent intent = new Intent(this.getApplicationContext(), this.getClass());
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         final PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent, 0);
         IntentFilter[] filters = new IntentFilter[1];
         String[][] techList = new String[][]{};
@@ -85,11 +86,11 @@ public abstract class NFC extends AppCompatActivity {
 
     protected void handleIntent(Intent intent) {
         String action = intent.getAction();
+
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
-
             String type = intent.getType();
-            if (MIME_TEXT_PLAIN.equals(type)) {
 
+            if (MIME_TEXT_PLAIN.equals(type)) {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
                 new NFCSecurityActivity.NdefReaderTask().execute(tag);
             }

@@ -4,7 +4,8 @@
  * Date : 01/12/2019
  * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
  * Version : 1.0
- * Description : Activity class that allows scanning a NFC tag but with some levels of cleareance.
+ * Description : Activity class that allows scanning a NFC
+ *               tag but with some levels of cleareance.
  *
  *===========================================================*/
 
@@ -30,7 +31,7 @@ public class NFCSecurityActivity extends NFC {
     public static final String PERMISSION_MIN_OK = "You still have minimum permission for ";
     public static final String PERMISSION_NOT_OK = "You don't have permission. If you want permission again, use the nfc.";
 
-    //seconds
+    // Permission time in seconds
     private final int MAX_LEVEL = 10;
     private final int MEDIUM_LEVEL = 20;
     private final int MIN_LEVEL = 30;

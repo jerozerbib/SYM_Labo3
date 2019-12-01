@@ -12,7 +12,7 @@
         android:text="@string/username" />
 
     <EditText
-        android:id="@+id/username_nfc"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -27,7 +27,7 @@
         android:text="@string/password" />
 
     <EditText
-        android:id="@+id/password_nfc"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -36,7 +36,7 @@
 
 
     <TextView
-        android:id="@+id/nfc_status"
+        android:id="@+id/nfcStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -46,7 +46,7 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:id="@+id/nfc_button"
+        android:id="@+id/connect"
         android:layout_width="200dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"

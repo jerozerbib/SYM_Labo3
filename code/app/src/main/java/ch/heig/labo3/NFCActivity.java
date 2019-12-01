@@ -24,16 +24,17 @@ import java.time.Instant;
 
 public class NFCActivity extends NFC {
 
-    private Button connec;
+    private Button connect;
     private EditText username;
     private EditText password;
     private TextView flagNfc;
 
-    //seconds
-    private final int MAX_TIME = 10;
     private String nfcResult;
 
-    //Only for labo, really bad thing to do.
+    // Login time out in seconds
+    private final int MAX_TIME = 10;
+
+    // Only for labo, really bad thing to do.
     private static final String USERNAME = "lio";
     private static final String PASSWORD = "lio";
     private static final String NFC_SECRET = "test";
@@ -43,15 +44,14 @@ public class NFCActivity extends NFC {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        flagNfc = findViewById(R.id.nfc_status);
-        connec = findViewById(R.id.nfc_button);
-        username = findViewById(R.id.username_nfc);
-        password = findViewById(R.id.password_nfc);
+        flagNfc = findViewById(R.id.nfcStatus);
+        connect = findViewById(R.id.connect);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
 
         timestamp = Instant.now().getEpochSecond();
 
-        connec.setOnClickListener(v -> {
-
+        connect.setOnClickListener(v -> {
             String usernameS = username.getText().toString();
             String passwordS = password.getText().toString();
 
@@ -105,7 +105,6 @@ public class NFCActivity extends NFC {
      * @return true if all data are correct
      */
     private boolean login(String username, String password, String result){
-
         return USERNAME.equals(username) && PASSWORD.equals(password) && NFC_SECRET.equals(result);
     }
 
@@ -113,8 +112,11 @@ public class NFCActivity extends NFC {
      * Change text and color after MAX_TIME and clean nfc data.
      */
     private void startTimer(){
-        CountDownTimer counter = new CountDownTimer(MAX_TIME*1000, 1000){
-            public void onTick(long millisUntilDone){}
+        new CountDownTimer(MAX_TIME * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {}
+
+            @Override
             public void onFinish() {
                 nfcResult = "";
                 flagNfc.setText(R.string.nfcIsDown);

@@ -4,7 +4,8 @@
  * Date : 01/12/2019
  * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
  * Version : 1.0
- * Description : Activity class that allows navigating to the two other activities for this lab
+ * Description : Activity class that allows navigating to the
+ *               two other activities for this lab
  *
  *===========================================================*/
 
@@ -18,19 +19,22 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button nfc;
+    private Button barcode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button nfc = findViewById(R.id.scan_me_button);
+        nfc = findViewById(R.id.scan_me_button);
         nfc.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NFCActivity.class);
             startActivityForResult(intent, 1);
         });
 
-        Button bluetooth = findViewById(R.id.barcode);
-        bluetooth.setOnClickListener(v -> {
+        barcode = findViewById(R.id.barcode);
+        barcode.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, BarCodeActivity.class);
             startActivityForResult(intent, 1);
         });

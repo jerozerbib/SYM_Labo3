@@ -4,11 +4,10 @@
  * Date : 01/12/2019
  * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
  * Version : 1.0
- * Description : Activity class that allows scanning any type of barcode
+ * Description : Activity class that allows scanning any type
+ *               of barcode
  *
  *===========================================================*/
-
-
 package ch.heig.labo3;
 
 import android.Manifest;
@@ -27,7 +26,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
 
 public class BarCodeActivity extends AppCompatActivity {
     // Elements of the activity
