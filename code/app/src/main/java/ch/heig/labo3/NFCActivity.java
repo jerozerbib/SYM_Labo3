@@ -1,3 +1,13 @@
+/*============================================================
+ *
+ * Name : BarCodeActivity.java
+ * Date : 01/12/2019
+ * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
+ * Version : 1.0
+ * Description : Activity class that allows scanning a NFC tag
+ *
+ *===========================================================*/
+
 package ch.heig.labo3;
 
 import android.Manifest;

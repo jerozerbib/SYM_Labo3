@@ -1,29 +1,40 @@
+/*============================================================
+ *
+ * Name : BarCodeActivity.java
+ * Date : 01/12/2019
+ * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
+ * Version : 1.0
+ * Description : Activity class that allows scanning any type of barcode
+ *
+ *===========================================================*/
+
+
 package ch.heig.labo3;
+
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Button;
-
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
 public class BarCodeActivity extends AppCompatActivity {
+    // Elements of the activity
     private TextView received = null;
     private Button scan = null;
 
+    // Response code for the permission setter
     private final int RESPONSE_CODE = 200;
 
 
@@ -97,6 +108,11 @@ public class BarCodeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets the message to display in the application if the permission is set or not
+     * @param message to display
+     * @param okListener action to do if the permission is set or not
+     */
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(this)
                 .setMessage(message)
@@ -106,6 +122,9 @@ public class BarCodeActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Requests the permission for this activity
+     */
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, RESPONSE_CODE);
     }

@@ -1,3 +1,14 @@
+/*============================================================
+ *
+ * Name : NFC.java
+ * Date : 01/12/2019
+ * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
+ * Version : 1.0
+ * Description : Inteface that allows scanning NFC tags
+ *
+ *===========================================================*/
+
+
 package ch.heig.labo3;
 
 import android.app.PendingIntent;
