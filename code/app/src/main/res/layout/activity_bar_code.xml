@@ -12,7 +12,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="50dp"
         android:textAlignment="center"
-        android:text="@string/welcome_Barcode" />
+        android:text="@string/welcomeBarcode" />
 
     <Button
         android:id="@+id/scan"
@@ -20,12 +20,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="@string/Scan_Me" />
+        android:hint="@string/scanMe" />
 
     <TextView
         android:id="@+id/barcode_response"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/received_barcode" />
+        android:text="@string/receivedBarcode" />
 
 </LinearLayout>

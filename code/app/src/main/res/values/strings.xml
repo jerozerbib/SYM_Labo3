@@ -1,13 +1,30 @@
 <resources>
-    <string name="app_name">Labo 3</string>
-    <string name="Barcode">Barcode</string>
+    <string name="appName">Labo 3</string>
+    <string name="barcode">Barcode</string>
     <string name="NFC">NFC</string>
-    <string name="Scan_Me">Scan me</string>
+    <string name="scanMe">Scan me</string>
     <string name="welcome">Welcome to this awesome third Lab of SYM</string>
-    <string name="welcome_Barcode">Welcome to this awesome barcode scanner Activity</string>
-    <string name="received_barcode">Received number : </string>
+    <string name="welcomeBarcode">Welcome to this awesome barcode scanner Activity</string>
+    <string name="receivedBarcode">Received number : </string>
     <string name="connect">CONNECT</string>
     <string name="password">Password :</string>
     <string name="username">Username :</string>
->>>>>>> ee9c1631fa1d9c98510f6a1c1cc401d36a221ef0
+    <string name="nfcIsDown">NFC is Down!</string>
+    <string name="nfcIsUp">NFC is Up!</string>
+    <string name="nfcDoesntExist">This device doesn\'t support NFC.</string>
+    <string name="noNfc">There is no NFC.</string>
+    <string name="nfcNotEnable">NFC is not enable.</string>
+    <string name="wrongCreds">Wrong password, username or wrong NFC secret.</string>
+    <string name="fullPerm">You have full permission again!</string>
+    <string name="maxSecurity">MAX SECURITY</string>
+    <string name="mediumSecurity">MEDIUM SECURITY</string>
+    <string name="minSecurity">MIN SECURITY</string>
+    <string name="barcodeReceivedNothing">Received nothing</string>
+    <string name="barcodeScanned">Scanned :</string>
+    <string name="barcodePrompt">Start Scanning</string>
+    <string name="permGranted">Permission Granted</string>
+    <string name="permDenied">Permission Denied</string>
+    <string name="allowAccess">You need to allow access permissions</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

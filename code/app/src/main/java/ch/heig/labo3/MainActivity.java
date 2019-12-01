@@ -1,3 +1,13 @@
+/*============================================================
+ *
+ * Name : MainActivity.java
+ * Date : 01/12/2019
+ * Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
+ * Version : 1.0
+ * Description : Activity class that allows navigating to the two other activities for this lab
+ *
+ *===========================================================*/
+
 package ch.heig.labo3;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,21 +17,19 @@ import android.os.Bundle;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button nfc;
-    private Button bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nfc = findViewById(R.id.scan_me_button);
+        Button nfc = findViewById(R.id.scan_me_button);
         nfc.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, NFCActivity.class);
             startActivityForResult(intent, 1);
         });
 
-        bluetooth = findViewById(R.id.barcode);
+        Button bluetooth = findViewById(R.id.barcode);
         bluetooth.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, BarCodeActivity.class);
             startActivityForResult(intent, 1);

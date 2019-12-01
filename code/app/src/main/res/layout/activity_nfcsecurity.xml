@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="20dp"
-        android:text="MAX SECURITY" />
+        android:text="@string/maxSecurity" />
 
     <Button
         android:id="@+id/nfc_button_sec_2"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="MEDIUM SECURITY" />
+        android:text="@string/mediumSecurity" />
 
     <Button
         android:id="@+id/nfc_button_sec_3"
@@ -28,6 +28,6 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="MIN SECURITY" />
+        android:text="@string/minSecurity" />
 
 </LinearLayout>
