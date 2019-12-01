@@ -10,11 +10,31 @@ Authors : Lionel Burgbacher, David Jaquet, Jeremy Zerbib
 
 ### NFC
 
-#### Dans la manipulation ci-dessus, les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8 dans un format de message NDEF. Une personne malveillante ayant accès au porte-clés peut aisément copier les valeurs stockées dans celui-ci et les répliquer sur une autre puce NFC. A partir de l’API Android concernant les tags NFC 4 , pouvez-vous imaginer une autre approche pour rendre plus compliqué le clonage des tags NFC ? Existe-il des limitations ? Voyez-vous d’autres possibilités ?
+#### Dans la manipulation ci-dessus, les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8 dans un format de message NDEF. Une personne malveillante ayant accès au porte-clés peut aisément copier les valeurs stockées dans celui-ci et les répliquer sur une autre puce NFC. A partir de l’API Android concernant les tags NFC, pouvez-vous imaginer une autre approche pour rendre plus compliqué le clonage des tags NFC ? Existe-il des limitations ? Voyez-vous d’autres possibilités ?
 
+En regardant l'`API` Android sur les tags `NFC`, nous pouvons voir une méthode appelée : `getTechList` qui permet de récupérer toutes les technologies utilisées sur ce Tag.
 
+Parmi ces technologies, nous pouvons voir que certains paramètres optionnels permettent de sécuriser les tags. Il est donc possible d'utiliser une technologie `MifareClassic` , avec une surcouche `Mifare DESFire` par exemple. Cette technologie apporte une couche de sécurité supplémentaire sur le Tag de par le fait que les communications sont chiffrées par un contrôle basé sur le partage de secrets. 
+
+Le soucis de cette approche est que si nous ne voulons pas avoir une connexion Internet active, il faut donc stocker la clé dans l'application. De par cette évidente erreur, l'attaquant peut facilement extraire la clé et donc l'utiliser pour cloner le Tag. 
+
+Donc, dans un cas de scénario hors-ligne, il faut noter qu'utiliser ce genre de solutions est exclus. 
+
+Il est possible d'utiliser un identifieur unique sur certains Tags NFC mis par le concepteur du Tag et qui ne peut pas être modifié. Il est donc possible de mettre en place une méthode de contrôle lors de la lecture du Tag pour vérifier si l'identifieur est fourni par nous ou non. En revanche, il est toujours possible d'extraire les données du Tag et de les cloner.
+
+Il est aussi possible d'utiliser une clé asymétrique utilisée pour signer un challenge cryptographique avec cette dernière. En utilisant un challenge aléatoire, il est possible de vérifier si le Tag est le véritable Tag ou non. Il n'y a pas besoin de stocker de clé dans la mémoire. De ce fait, la vérification avec la clé publique suffit et il s'agit de la solution la plus sécurisée. 
+
+[Source](https://stackoverflow.com/questions/22878634/how-to-prevent-nfc-tag-cloning?noredirect=1)
 
 #### Est-ce qu’une solution basée sur la vérification de la présence d’un iBeacon sur l’utilisateur, par exemple sous la forme d’un porte-clés serait préférable ? Veuillez en discuter.
+
+Une solution utilisant un `iBeacon` ne serait pas optimale car il n'y a pas de support natif pour *Android*. De par cela, cela rajoute des complications supplémentaires pour un développeur *Android*. 
+
+De plus, les `iBeacon`s n''implémentent pas de solutions contre le clonage de manière native. De manière globale, *Apple* ne laisse aucun de ses *iDevices* regarder un `iBeacon` qui n'a pas un `ProximityUUID` connu.  Sachant que toutes les autres technologies peuvent lire ces `ProximityUUID` inconnus, il semble que cette approche est futile en termes de sécurité. Il existe un outil sur *Android* permettant de déployer son propre `iBeacon`.  ~~[Android iBeacon Locate](https://play.google.com/store/apps/details?id=com.radiusnetworks.ibeaconlocate)~~ -> application plus valable mais l'idée est là.
+
+Des solutions permettant de patcher ces problèmes sont détaillées [ici](https://stackoverflow.com/questions/23383606/how-to-prevent-cloning-in-ibeacons-and-avoid-conflicts-among-beacons) mais ne sont que très peu recommandées. 
+
+En conclusion, il est peu préférable d'utiliser un `iBeacon` pour vérifier la validité d'un Tag `NFC`. 
 
 
 
