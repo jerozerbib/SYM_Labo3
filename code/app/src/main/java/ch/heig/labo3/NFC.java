@@ -101,10 +101,7 @@ public abstract class NFC extends AppCompatActivity {
 
             // In case we would still use the Tech Discovered Intent
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            String[] techList = new String[0];
-            if (tag != null) {
-                techList = tag.getTechList();
-            }
+            String[] techList = tag.getTechList();
             String searchedTech = Ndef.class.getName();
 
             for (String tech : techList) {

@@ -10,10 +10,7 @@
 
 package ch.heig.labo3;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -23,22 +20,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.time.Instant;
 
 public class NFCActivity extends NFC {
 
+    private Button connec;
     private EditText username;
     private EditText password;
     private TextView flagNfc;
-    private Button connec;
 
     //seconds
     private final int MAX_TIME = 10;
-    private final int RESPONSE_CODE = 200;
     private String nfcResult;
 
     //Only for labo, really bad thing to do.
@@ -51,18 +43,48 @@ public class NFCActivity extends NFC {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        connec = findViewById(R.id.nfc_button);
         flagNfc = findViewById(R.id.nfc_status);
+        connec = findViewById(R.id.nfc_button);
         username = findViewById(R.id.username_nfc);
         password = findViewById(R.id.password_nfc);
 
         timestamp = Instant.now().getEpochSecond();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission();
-        } else {
-            startActivity();
+        connec.setOnClickListener(v -> {
+
+            String usernameS = username.getText().toString();
+            String passwordS = password.getText().toString();
+
+            if(Instant.now().getEpochSecond() - timestamp > MAX_TIME){
+                Toast.makeText(this, R.string.noNfc, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if(!login(usernameS, passwordS, nfcResult)){
+                Toast.makeText(this, R.string.wrongCreds, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Intent intent = new Intent(NFCActivity.this, NFCSecurityActivity.class);
+            startActivity(intent);
+        });
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        if (mNfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, R.string.nfcDoesntExist, Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
+
+        if (!mNfcAdapter.isEnabled()) {
+            Toast.makeText(this, R.string.nfcNotEnable, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        handleIntent(getIntent());
     }
 
     @Override
@@ -99,73 +121,5 @@ public class NFCActivity extends NFC {
                 flagNfc.setTextColor(Color.RED);
             }
         }.start();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == RESPONSE_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), getString( R.string.permGranted), Toast.LENGTH_SHORT).show();
-                startActivity();
-            } else {
-                Toast.makeText(getApplicationContext(), getString( R.string.permDenied), Toast.LENGTH_SHORT).show();
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    showMessageOKCancel(getString(R.string.allowAccess),
-                            (dialog, which) -> requestPermission());
-                }
-            }
-        }
-    }
-
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton(getString(R.string.ok), okListener)
-                .setNegativeButton(getString(R.string.cancel), null)
-                .create()
-                .show();
-    }
-
-    private void requestPermission(){
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, RESPONSE_CODE);
-    }
-
-    private void startActivity() {
-        connec.setOnClickListener(v -> {
-
-            String usernameS = username.getText().toString();
-            String passwordS = password.getText().toString();
-
-            if(Instant.now().getEpochSecond() - timestamp > MAX_TIME){
-                Toast.makeText(this, R.string.noNfc, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if(!login(usernameS, passwordS, nfcResult)){
-                Toast.makeText(this, R.string.wrongCreds, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Intent intent = new Intent(NFCActivity.this, NFCSecurityActivity.class);
-            startActivity(intent);
-        });
-
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, R.string.nfcDoesntExist, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, R.string.nfcNotEnable, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        handleIntent(getIntent());
     }
 }

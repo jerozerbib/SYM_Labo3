@@ -21,6 +21,10 @@ import java.time.Instant;
 
 public class NFCSecurityActivity extends NFC {
 
+    private Button maxSecurity;
+    private Button mediumSecurity;
+    private Button minSecurity;
+
     public static final String PERMISSION_MAX_OK = "You still have max permission for ";
     public static final String PERMISSION_MEDIUM_OK = "You still have medium permission for ";
     public static final String PERMISSION_MIN_OK = "You still have minimum permission for ";
@@ -36,9 +40,9 @@ public class NFCSecurityActivity extends NFC {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcsecurity);
 
-        Button maxSecurity = findViewById(R.id.nfc_button_sec_1);
-        Button mediumSecurity = findViewById(R.id.nfc_button_sec_2);
-        Button minSecurity = findViewById(R.id.nfc_button_sec_3);
+        maxSecurity = findViewById(R.id.nfc_button_sec_1);
+        mediumSecurity = findViewById(R.id.nfc_button_sec_2);
+        minSecurity = findViewById(R.id.nfc_button_sec_3);
 
         timestamp = Instant.now().getEpochSecond();
 
